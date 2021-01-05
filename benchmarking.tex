@@ -1,0 +1,201 @@
+% The first command in your LaTeX source must be the \documentclass command.
+
+
+\documentclass[sigconf]{acmart}
+\settopmatter{printacmref=true}
+
+\fancyhead{}
+  % do not delete this code.
+
+\usepackage{balance}
+  % for creating a balanced last page (usually last page with references)
+
+% defining the \BibTeX command - from Oren Patashnik's original BibTeX documentation.
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    
+% Rights management information. 
+% This information is sent to you when you complete the rights form.
+% These commands have SAMPLE values in them; it is your responsibility as an author to replace
+% the commands and values with those provided to you when you complete the rights form.
+%
+% These commands are for a PROCEEDINGS abstract or paper.
+
+
+% Submission ID. 
+% Use this when submitting an article to a sponsored event. You'll receive a unique submission ID from the organizers
+% of the event, and this ID should be used as the parameter to this command.
+%\acmSubmissionID{123-A56-BU3}
+
+
+% end of the preamble, start of the body of the document source.
+
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{epsfig,url}
+\usepackage{epsf}
+
+%Control space between caption and figure/table
+\captionsetup[figure]{font=small,skip=5pt}
+%\captionsetup[table]{font=small,skip=0pt}
+
+
+\copyrightyear{2021}
+\acmYear{2021}
+\setcopyright{acmcopyright}
+\acmConference[ISPD '21]{Proceedings of the 2021 International Symposium on Physical Design}{March 29-April 1, 2021}{Virtual} \acmBooktitle{Proceedings of the 2021 International Symposium on Physical Design (ISPD '21), March 29-April 1, 2021, Virtual}
+\acmPrice{15.00} \acmDOI{10.1145/3372780.3375563} \acmISBN{978-1-4503-7091-2/20/03}
+
+\begin{document}
+
+
+\title{Still Benchmarking After All These Years}
+\iffalse
+\author{Blind Review}
+\else
+\author{Jinwook Jung}
+\email{jinwookjung@ibm.com}
+\affiliation{
+  \institution{IBM Watson Research Center}
+}
+\author{Patrick H. Madden}
+\email{pmadden@binghamton.edu}
+\affiliation{
+  \institution{SUNY Binghamton Computer Science Department}
+  \streetaddress{Box 6000}
+  \city{Binghamton}
+  \state{New York}
+  \postcode{13902}
+}
+ 
+\fi
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+
+\begin{CCSXML}
+\end{CCSXML}
+
+\ccsdesc[500]{Hardware~Placement}
+
+
+%
+% Keywords. The author(s) should pick words that accurately describe the work being
+% presented. Separate the keywords with commas.
+
+\keywords{benchmarking; circuit placement; metrics}
+
+\maketitle
+
+\section{Introduction}
+
+Integrated circuits have evolved at a breakneck pace for many years.  While
+the early predictions by Moore\cite{Moore650114} might have seen far-fetched
+at the time, Moore's Law has mostly held true.  Each year, we have more
+transistors, they cost less, and all of this is on an exponential path.
+To enable this growth, researchers in a range of fields have
+seemingly endless innovations.  Physicists,
+chemists, and process engineers have designed new devices. Lithographers
+have found ways print mind-boggling levels of detail. Software developers
+and algorithm designers have built new tools to handle the staggering
+complexity.
+
+Physical design automation researchers have played their part as well.
+The placement and routing tools of the modern era are sophisticated,
+letting circuit designers squeeze performance.
+{\em Benchmarking} of tools and algorithms has been an essential
+part of this growth.
+
+In this paper, we look back at where the physical design community
+was, some twenty years ago -- and consider what the research
+community has done well, and what we might have done better, and
+what we might want to do in the future.
+
+Certainly, much has changed over the years.  Not so long ago, the
+web was not ubiquitous -- getting access to benchmarks, even if they
+were ``publicly available,'' required knowing who to ask, where to
+look, and the navigation of anonymous FTP servers.  Disk space,
+processor cycles, and memory, were all in short supply -- even with
+access to benchmarks, it might not be possible to do anything with them.
+In this era, nearly everyone has a smart phone with a super-computer
+class processor, nearly infinite disk space, and vast amounts of
+RAM on their workstations; it's easy to forget that many of the engineers
+working today started with punch cards, paper terminals, and, if they
+were lucky, floppy disks.
+
+
+\section{Objectives of Benchmarking}
+Why we do benchmarking.  This is all stuff that we ``know,'' but
+may not have said explicitly.  And often, what we assume that we
+all ``know'' is not in fact common knowledge.
+
+\subsection{Better Solutions for Problems}
+Industry can highlight critical problems, ones where new solutions
+are needed.
+
+\subsection{A Training Ground for Researchers}
+Graduate students learn about physical design, hone their software
+development skills.
+
+\subsection{A Platform for Experimentation}
+Fast turn-around invites higher-risk approaches, new ideas
+
+
+\section{Getting Things Right}
+
+Striking a balance between objectives.  Industry groups
+would certainly like a production-ready tool, but this is
+something that a small team of graduate students can't
+build quickly.
+
+Need to capture the essence of a problem, while keeping it
+tractable.  Make the benchmark hard to game, so that solutions
+actually resemble what we might want ``in practice.''
+
+Trade-off on using library for parsing -- locks into a build
+system, sometimes a language and set of tools.  Simple
+file formats, by contrast, may lose the essential elements
+that matter for an industrial design.
+
+Evaluators, with painstaking detail, are important.
+
+Complex tool flows for evaluation are trouble.
+
+\section{The Bookshelf}
+
+\cite{Caldwell000693}\cite{umichbookshelf}
+
+
+\section{The ISPD Contests}
+
+Beginning in 2005, ISPD has run annual contests to evaluate
+different approaches to key physical design problems.  For circuit
+placement, the contsts have occurred in 2005, 2006, 2011, 2014,
+2015, with 2016 and 2017 focusing on placement for
+field programmable gate arrays.
+
+{\em talk about each year of the contest.  Metrics.  Citations
+  for important publications based off the contest benchmarks.}
+
+\subsection{Mixed Size Placement, 2005, 2006}
+
+\subsection{Routability, 2011}
+
+\subsection{Detail Routing Driven Placement, 2014, 2015}
+
+\subsection{FPGA Placement 2016, 2017}
+
+\subsection{Deep Learning Accelerator Placement, 2020}
+
+
+
+\input jinwook.tex
+
+
+\balance
+\bibliographystyle{unsrt}
+\bibliography{unify}
+
+
+\end{document}
+
