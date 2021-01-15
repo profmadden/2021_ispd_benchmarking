@@ -59,6 +59,11 @@
 \iffalse
 \author{Blind Review}
 \else
+\author{Ismail S. K. Bustany}
+\email{ISMAILB@xilinx.com}
+\affiliation{
+  \institution{Xilinx}
+}
 \author{Jinwook Jung}
 \email{jinwookjung@ibm.com}
 \affiliation{
@@ -81,6 +86,11 @@
 \email{nviswan@cadence.com}
 \affiliation{
   \institution{Cadence}
+}
+\author{Stephen Yang}
+\email{stepheny@xilinx.com}
+\affiliation{
+  \institution{Xilinx}
 }
 
 
@@ -106,7 +116,7 @@
 
 \section{Introduction}
 
-Integrated circuits have evolved at a breakneck pace for many years.  The
+Integrated circuits have evolved at a breakneck pace for decades.  The
 first MOSFET transistors were created at the end of the 1950's, with 
 Moore\cite{Moore650114} making his bold prediction for exponential growth
 in 1965.  While it might have seen far-fetched or wildly optimistic
@@ -115,7 +125,8 @@ Each year, we have far more
 transistors while costs plunge.
 In 1960, only a handful of transistors could be integrated into a single
 device, but by 1980, just twenty years later, the Motorola 68000 had
-roughly sixty-eight thousand transistors.  Twenty years after that, the Intel Pentium 4
+roughly sixty-eight thousand transistors.  Twenty years after that,
+the Intel Pentium 4
 featured roughly forty-two million transistors.  Twenty years after that, in
 the era in which this paper is being written, the Apple M1 processor has
 in excess of sixteen billion transistors.
@@ -132,18 +143,34 @@ Physical design automation researchers have played their part as well;
 placement and routing tools of the modern era are sophisticated, effective,
 and have tremendous scalability.
 
-{\em Benchmarking}, to allow comparison of different approaches,
-forms the foundation on which any progress is built.
+The very earliest circuits were designed by hand, each one
+a custom creation.  As design sizes increased, designers converged
+on a few common conventions, such as lambda-based design rules, standard
+cell libraries\cite{Mead93}.  The convergence enabled shared
+design tool frameworks, along with {\em benchmarking}
+to compare of different approaches.
+
 In 1987, a panel discussion\cite{Preas87}
 highlighted the need for good benchmarks for standard cell
 design, and a few years later, the MCNC benchmarks\cite{Kozminski91}
 were presented and quickly gained prominence.  Some of the benchmarks
 grew out of discussions held at the Physical Design Workshop,
 a precursor to ISPD.
-While the
-MCNC circuits were valuable, there were few updates -- and a
-decade later, variations in how results were reported
-stirred concern\cite{Madden010030}.
+
+While the MCNC circuits were valuable, there were few updates. A
+decade later, they were still in wide use -- but variations in how
+results were reported stirred concern\cite{Madden010030}.  Work on
+benchmarking had fallen out of step with industry practice; this
+motivated a renewed focus, bringing together researchers from both
+academia and industry to address the gaps\cite{Adya030095,Adya040472}.
+
+In this paper, we look back at the impact of benchmarking
+efforts on circuit placement, consider what the research
+community has done well, and the directions and focus
+going forward.
+
+
+\section{Benchmarking in Physical Design}
 
 If the rapid progress demanded by Moore's Law was to continue, it
 was essential that new benchmarks and better metrics be developed;
@@ -155,33 +182,6 @@ resulting in many industry and academic researchers
 contributing their efforts to the GSRC Bookshelf\cite{umichbookshelf}.
 New file formats, benchmarks, and tools, have become
 a key part of the ISPD community.
-
-In this paper, we look back at the impact of benchmarking
-efforts on circuit placement, consider what the research
-community has done well, and what
-we might want to do in the future.
-
-
-\section{Benchmarking in Physical Design}
-
-Certainly, much has changed over the years.  Preas\cite{Preas87}
-noted in 1987 that some circuits with over 10,000 cells were becoming
-commonplace -- challenging to handle because representing them
-``may require a substantial fraction of a megabyte for storage.''
-Circuits of this size might seem absurdly small today -- but they
-were in fact challenging.
-
-It's easy to forget -- but not so long ago, the
-world wide web was not ubiquitous. Getting access to benchmarks, even if they
-were ``publicly available,'' required knowing who to ask, where to
-look, and the navigation of anonymous FTP servers.  Disk space,
-processor cycles, and memory, were all in short supply -- even with
-access to benchmarks, it might not be possible to do anything with them.
-In this era, nearly everyone has a smart phone with a blazingly fast
-processor, nearly infinite disk space, and vast amounts of
-RAM on their workstations.  Many of the engineers
-working today started their careers with punch cards,
-paper terminals, and, if they were lucky, floppy disks.
 
 \subsection{Design Methodology}
 
@@ -266,6 +266,7 @@ field programmable gate arrays.
 \subsection{Mixed Size Placement, 2005, 2006}
 
 {\bf Gi-Joon}.  
+\cite{ISPD05_contest}
 Details here about ISPD 2005.  Cite relevant papers.
 Benchmarks are adaptec, bigblue versions.  Legal2.pl script to
 check legality.  Nine teams competing.
@@ -335,7 +336,25 @@ Talk about open source tool flow.
 
 \section{Concluding Comments}
 
-Wrap up the paper with a feel-good paragraph or two.
+Certainly, much has changed over the years.  Preas\cite{Preas87}
+noted in 1987 that some circuits with over 10,000 cells were becoming
+commonplace -- challenging to handle because representing them
+``may require a substantial fraction of a megabyte for storage.''
+Circuits of this size might seem absurdly small today -- but they
+were in fact challenging.
+
+It's easy to forget -- but not so long ago, the
+world wide web was not ubiquitous. Getting access to benchmarks, even if they
+were ``publicly available,'' required knowing who to ask, where to
+look, and the navigation of anonymous FTP servers.  Disk space,
+processor cycles, and memory, were all in short supply -- even with
+access to benchmarks, it might not be possible to do anything with them.
+In this era, nearly everyone has a smart phone with a blazingly fast
+processor, nearly infinite disk space, and vast amounts of
+RAM on their workstations.  Many of the engineers
+working today started their careers with punch cards,
+paper terminals, and, if they were lucky, floppy disks.
+
 
 
 \balance
