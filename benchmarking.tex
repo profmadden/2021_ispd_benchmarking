@@ -117,89 +117,186 @@
 \section{Introduction}
 
 Integrated circuits have evolved at a breakneck pace for decades.  The
-first MOSFET transistors were created at the end of the 1950's, with 
-Moore\cite{Moore650114} making his bold prediction for exponential growth
-in 1965.  While it might have seen far-fetched or wildly optimistic
-at the time, Moore's Law has been a relentless juggernaut.
-Each year, we have far more
-transistors while costs plunge.
-In 1960, only a handful of transistors could be integrated into a single
-device, but by 1980, just twenty years later, the Motorola 68000 had
-roughly sixty-eight thousand transistors.  Twenty years after that,
-the Intel Pentium 4
-featured roughly forty-two million transistors.  Twenty years after that, in
-the era in which this paper is being written, the Apple M1 processor has
-in excess of sixteen billion transistors.
+first MOSFET transistors were created at the end of the 1950's, with
+Moore\cite{Moore650114} making his bold prediction for exponential
+growth in 1965.  While it might have seemed far-fetched or wildly
+optimistic at the time, Moore's Law has been a relentless juggernaut.
+In 1960, only a handful of transistors could be integrated into a
+single device, but by 1980, just twenty years later, the Motorola
+68000 had roughly sixty-eight thousand transistors.  Twenty years
+after that, the Intel Pentium 4 featured roughly forty-two million
+transistors.  Twenty years after that, in the era in which this paper
+is being written, the Apple M1 processor has in excess of sixteen
+billion transistors.
+
+None of these advances have been spontaneous.  At each
+step along the way, researchers from both academia and
+industry have been quietly identifying and overcoming
+technological barriers.  The massive electronics industry,
+which has impacted almost every aspect of modern life,
+is the product of decades of hard work.
+
+Market forces have been driving the industry forward; there are
+fortunes to be made in modern electonics.  These forces have also been
+something of a barrier.  There is competitive advantage to secrecy
+around process technologies, circuit design, and design methodology --
+but this secrecy also makes it challenging for a broad community of
+researchers to solve new problems.
+
+
+In this paper, we look back on how progress has been made
+in physical design, with an emphasis on circuit placement.
+Benchmarks have been a critical part of enabling progress;
+following something of a rocky start, the physical design
+community has established a process that has taken the field
+from entirely uncharted territory into a state where sustained,
+regular progress can be made.
+
 
 % https://en.wikipedia.org/wiki/Transistor_count
+% Better citation for stuff like this?
+\iffalse
+{\bf How to say this?
+  Economic driver pushing technology forward.  Lots of
+  companies competing for market share.  Secrecy on
+  design technology, circuit designs, gives a competitive
+  advantage -- but also limits the number of people who
+  can solve the problems that need to be solved.
 
-To enable this growth, researchers in a range of fields have
-seemingly endless innovations.  Physicists,
-chemists, and process engineers have designed new devices. Lithographers
-have found ways print mind-boggling levels of detail. Software developers
-and algorithm designers have built new tools to handle the staggering
-complexity. 
-Physical design automation researchers have played their part as well;
-placement and routing tools of the modern era are sophisticated, effective,
-and have tremendous scalability.
-
-The very earliest circuits were designed by hand, each one
-a custom creation.  As design sizes increased, designers converged
-on a few common conventions, such as lambda-based design rules, standard
-cell libraries\cite{Mead93}.  The convergence enabled shared
-design tool frameworks, along with {\em benchmarking}
-to compare of different approaches.
-
-In 1987, a panel discussion\cite{Preas87}
-highlighted the need for good benchmarks for standard cell
-design, and a few years later, the MCNC benchmarks\cite{Kozminski91}
-were presented and quickly gained prominence.  Some of the benchmarks
-grew out of discussions held at the Physical Design Workshop,
-a precursor to ISPD.
-
-While the MCNC circuits were valuable, there were few updates. A
-decade later, they were still in wide use -- but variations in how
-results were reported stirred concern\cite{Madden010030}.  Work on
-benchmarking had fallen out of step with industry practice; this
-motivated a renewed focus, bringing together researchers from both
-academia and industry to address the gaps\cite{Adya030095,Adya040472}.
-
-In this paper, we look back at the impact of benchmarking
-efforts on circuit placement, consider what the research
-community has done well, and the directions and focus
-going forward.
+  For academic researchers in particular to be helpful,
+  details of the problems needing solving have to be
+  available.  Without test cases, and things that are
+  suitable for publication, they cannot assist.
+}
 
 
-\section{Benchmarking in Physical Design}
 
-If the rapid progress demanded by Moore's Law was to continue, it
-was essential that new benchmarks and better metrics be developed;
-further, this could not be a one-off endeavor, but instead a
-practice that would keep pace with industry trends.  The
-GSRC supported GTX project
-\cite{Caldwell000693} provided a platform to work from,
-resulting in many industry and academic researchers
-contributing their efforts to the GSRC Bookshelf\cite{umichbookshelf}.
-New file formats, benchmarks, and tools, have become
-a key part of the ISPD community.
 
-\subsection{Design Methodology}
+Making progress in design automation has been challenging;
+the problems addressed are fundamentally hard from a scientific
+perspective. Complicating matters further are the financial
+implications -- semiconductor manufacturers, design tool companies,
+and circuit designers, are all interested in making profits, and
+this depends on some degree of secrecy in their work.  At the
+same time, solving design problems requires assistance from
+others.
+\fi
 
-A first step in building a platform for progress was the adoption
-of a well defined design methodology -- namely standard cell design,
-with lambda-based fabrication rules.  Mead and Conway were pioneers
-and advocates\cite{Mead93}, shifting designers away from one-off
-fully custom creations.  Standard cells and regular design rules allowed
-for greater automation and interchangable design tools.
 
-\subsection{File Formats and Methology}
+\section{Laying the Foundations}
+
+The very earliest circuits were designed by hand, each one a custom
+creation. As design sizes increased, and semiconductor fabrication
+technologies became more refined, designers converged on a few
+common conventions and abstractions, such as lambda-based design rules
+and standard cell libraries\cite{Mead93}.  A design flow of logic
+synthesis, to placement, and to routing, enabled interchangable
+design automation tools, and common design file formats.
+
+For the research community, however, there were few common benchmark
+problems.  In 1987, a panel discussion\cite{Preas87} highlighted the
+need for good benchmarks for standard cell design, and a few years
+later in 1991, the MCNC benchmarks\cite{Kozminski91} were presented
+and quickly gained prominence.  The benchmarks are shown in Table
+\ref{tab:mcnc} -- while they were not comparable in size and
+complexity to the leading edge of industrial design, they filled a
+vacuum, and were a catalyst for academic groups.  The availability of
+circuits that could be used as physical design benchmark sparked a
+wave of circuit placement research.
+
+\begin{table}
+  \begin{tabular}{|l|r|r|r|} \hline
+Name & \# cells & \# nets & \# I/O \\ \hline
+    fract   &   125 &   147 & 24 \\ \hline
+   primary1 &   752 &   985 & 81 \\ \hline
+    struct  &  1888 &  1920 & 64 \\ \hline
+  industry1 &  2271 & 2593 & 814 \\ \hline
+  primary2 & 2907 & 3136 & 107 \\ \hline
+  biomed & 6417 & 5742 & 97 \\ \hline
+  industry2 & 12142 & 13419 & 495 \\ \hline
+  industry3 & 15059 & 21940 & 375 \\ \hline
+  \end{tabular}
+  \caption{The original MCNC standard cell
+    benchmarks\cite{Kozminski91}.}\label{tab:mcnc}
+\end{table}
+
+
+There was hope that more benchmarks would
+become available\cite{Kozminski91},
+but relatively little happened.
+A decade later, the original MCNC
+benchmarks were still in wide use, and
+the gap between academic research and
+industrial practice had widened.
+Even more troubling -- to try to keep pace, many research
+groups were scaling and translating the benchmarks in
+a variety of ways, resulting in massive variations in how
+results were reported\cite{Madden010030}.
+
+\section{Placement Benchmarking}
+
+A lack of new circuit benchmarks hampered the work of many academic
+groups.  What was needed was a way to break the log-jam, and this
+arrived in the form of the release of ``ISPD98'' partitioning
+benchmarks by Alpert\cite{Alpert980080}.  The net lists in this set of
+benchmarks were derived from industrial circuits, where net names and
+the functionality of logic elements had been obscured.  This protected
+the intellectual property of the original designs, while still providing
+a realistic overall structure.  Using this as a starting point,
+Wang\cite{Wang000260} created ``placement-like'' benchmarks by simply
+mapping vertex weights to cell sizes.  Carrying the idea further,
+designs with a mixture of macro blocks and cells were created by
+Adya\cite{Adya020012}.
+
+
+\begin{quote}
+All information relating to circuit functionality, timing and technology is removed. Unfortunately, this limits the direct applicability of these circuits (e.g., functional rep- lication for partitioning); yet, the release of these circuits would have been impossible otherwise. \cite{Alpert980080}
+\end{quote}
+
+% industry practice\cite{Adya040472}.
+
+After a number of years of little change, there was a burst of
+activity, drawing in researchers from both academia and industry.  The
+GSRC supported GTX project \cite{Caldwell000693} provided a platform
+to work from.
+
+% ISPD98 partitioning benchmarks by Chuck
+
+% Partition to placement
+% \cite{Wang000260}
+% Converted to mixed size placement in ISPD02 by Igor
+% \cite{Adya020012}
+% Mixed size placer PHM in ISPD04
+% \cite{Khatkhate040084}
+% ISPD05 -- Adaptec and Bigblue, fixed macros
+% \cite{Nam050216}
+
+
+% \subsection{Bookshelf File Formats}
+
+It's worth highlighting the file formats used for the new benchmarks.
+Rather than utilizing industry standards such as LEF and DEF,
+there was an emphasis on new easy-to-parse file formats as part
+of the GSRC ``bookshelf''\cite{umichbookshelf}.
+
+For academic research groups, and particularly for new graduate
+students working in the area, industrial-grade files can
+be overwhelming.  Simply developing a parser to handle these
+formats is a massive undertaking; software libraries that can
+parse the files require extensive call-back support.
+
+By contrast, the Bookshelf formats require little more than
+a ``for loop'' to parse effectively, freeing up academic researchers
+to focus on new algorithms.  
+
+
 % SIGDA newsletter! Franc Brglez from MCNC
 % http://web.cs.ucla.edu/classes/layout/testing/Examples.iscas/ISCAS89/Benchmark.readme
 
-{\bf Talk about production file formats versus things that
-  are easy to parse.  Decisions made for GSRC Bookshelf.}
+% {\bf Talk about production file formats versus things that
+%   are easy to parse.  Decisions made for GSRC Bookshelf.}
 
-\cite{Caldwell000693}\cite{umichbookshelf}
+% \cite{Caldwell000693}\cite{umichbookshelf}
 
 \subsection{Benchmarking Objectives}
 
@@ -335,6 +432,21 @@ Talk about open source tool flow.
 
 
 \section{Concluding Comments}
+
+\begin{quote}
+It seems apparent that more benchmarks for layout synthesis are
+needed, they should be more fully described, as discussed earlier in
+the paper. In the opinion of the author, distributing pure
+geometrical data is no longer sufficient for meaningful benchmarking
+of algorithms used in real-life applications to produce working chip
+layouts. The circuit's function as well as its speed and timing
+requirements should be supplied together with technological data
+required to verify the performance of the completed design. As an
+unavoidable consequence, future benchmarks will have to come from
+sources willing to put the information about logical functions of the
+benchmark circuits in the public domain.
+\end{quote}
+
 
 Certainly, much has changed over the years.  Preas\cite{Preas87}
 noted in 1987 that some circuits with over 10,000 cells were becoming
