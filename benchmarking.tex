@@ -48,14 +48,16 @@
 
 \copyrightyear{2021}
 \acmYear{2021}
-\setcopyright{acmcopyright}
-\acmConference[ISPD '21]{Proceedings of the 2021 International Symposium on Physical Design}{March 29-April 1, 2021}{Virtual} \acmBooktitle{Proceedings of the 2021 International Symposium on Physical Design (ISPD '21), March 29-April 1, 2021, Virtual}
-\acmPrice{15.00} \acmDOI{10.1145/3372780.3375563} \acmISBN{978-1-4503-7091-2/20/03}
+\setcopyright{acmcopyright}\acmConference[ISPD '21]{Proceedings of the 2021 International Symposium on Physical Design}{March 22--24, 2021}{Virtual Event, USA}
+\acmBooktitle{Proceedings of the 2021 International Symposium on Physical Design (ISPD '21), March 22--24, 2021, Virtual Event, USA}
+\acmPrice{15.00}
+\acmDOI{10.1145/3439706.3446885}
+\acmISBN{978-1-4503-8300-4/21/03}
 
 \begin{document}
 
 
-\title{Still Benchmarking After All These Years}
+\title{Still Benchmarking After All These Years\\(Draft, Invited)}
 \iffalse
 \author{Blind Review}
 \else
@@ -101,9 +103,16 @@
 \end{abstract}
 
 \begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10010583.10010682</concept_id>
+       <concept_desc>Hardware~Electronic design automation</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+ </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Hardware~Placement}
+\ccsdesc[500]{Hardware~Electronic design automation}
 
 
 %
@@ -137,21 +146,25 @@ technological barriers.  The massive electronics industry,
 which has impacted almost every aspect of modern life,
 is the product of decades of hard work.
 
-Market forces have been driving the industry forward; there are
-fortunes to be made in modern electonics.  These market forces have
-also been something of a barrier -- secrecy around process
-technologies, circuit designs, and design methodologies gives a
-competitive advantage, but limits the size of the research community
-that can engage in looking for new ideas and solutions.
+Benchmarking, the practice of using example problems to compare
+different solution approaches, has been critical to this progress.
+Benchmarks that have well defined metrics, and that are widely
+available, are most helpful; they can engage a broad audience, drawing
+in contributions and ideas.  The market forces that have driven the
+electronics industry forward have also in some ways been a barrier;
+secrecy
+around process technologies, circuit designs, and design methodologies
+give a competitive advantage, and groups at the leading edge of
+technology are often reluctant to reveal their secrets.
 
-In this paper, we look back on how progress has been made
+In this paper, we look back on how the role of benchmarking
 in physical design, with an emphasis on circuit placement.
-Benchmarks, which can reveal enough of the nature of a design
-problem to enable research, while also protecting proprietary
-information, have been a critical part of enabling progress.
 Following something of a rocky start, the physical design
-community has found workable solutions that have taken the field
-from entirely uncharted territory into a state where sustained,
+community has found workable solutions that protects the
+intellectual property of industry leaders, while also
+opening up design benchmarks for the general public.
+This has allowed
+physical design to evolve to a state where sustained,
 regular progress can be made.
 
 
@@ -185,7 +198,7 @@ others.
 \fi
 
 
-\section{Laying the Foundations}
+\section{Placement Benchmarking}
 
 The very earliest circuits were designed by hand, each one a custom
 creation. As design sizes increased, and semiconductor fabrication
@@ -195,15 +208,22 @@ and standard cell libraries\cite{Mead93}.  A design flow of logic
 synthesis, to placement, and to routing, enabled interchangable
 design automation tools and encouraged common design file formats.
 
-For the research community, however, there were few common benchmark
-problems.  In 1987, a panel discussion\cite{Preas87} highlighted the
-need for good benchmarks for standard cell design, and a few years
+
+
+
+
+\subsection{Early Benchmarks}
+
+
+There were few commonly available circuits and benchmark problems in
+the early days.  In 1987, a panel discussion\cite{Preas87} highlighted
+the need for good benchmarks for standard cell design, and a few years
 later in 1991, the MCNC benchmarks\cite{Kozminski91} were presented
 and quickly gained prominence.  The benchmarks are shown in Table
 \ref{tab:mcnc} -- while they were not comparable in size and
 complexity to the leading edge of industrial design, they filled a
-vacuum, and were a catalyst for academic research.  The availability of
-circuits that could be used as physical design benchmarks sparked a
+vacuum, and were a catalyst for academic research.  The availability
+of circuits that could be used as physical design benchmarks sparked a
 wave of circuit placement research.
 
 \begin{table}
@@ -224,8 +244,22 @@ Name & \# cells & \# nets & \# I/O \\ \hline
 
 
 There was hope that more benchmarks would
-become available\cite{Kozminski91},
-but relatively little happened.
+become available; Kozminski\cite{Kozminski91} noted the following:
+
+\begin{quote}
+It seems apparent that more benchmarks for layout synthesis are
+needed, they should be more fully described, as discussed earlier in
+the paper. In the opinion of the author, distributing pure
+geometrical data is no longer sufficient for meaningful benchmarking
+of algorithms used in real-life applications to produce working chip
+layouts. The circuit's function as well as its speed and timing
+requirements should be supplied together with technological data
+required to verify the performance of the completed design. As an
+unavoidable consequence, future benchmarks will have to come from
+sources willing to put the information about logical functions of the
+benchmark circuits in the public domain.
+\end{quote}
+
 A decade later, the original MCNC
 benchmarks were still in wide use, and
 the gap between academic research and
@@ -235,7 +269,7 @@ groups were scaling and translating the benchmarks in
 a variety of ways, resulting in massive variations in how
 results were reported\cite{Madden010030}.
 
-\section{Placement Benchmarking}
+\subsection{From Partitioning to Placement}
 
 Researchers in both academia and industry were troubled
 by a lack of up-to-date physical benchmarks; what was
@@ -282,6 +316,8 @@ to work from.
 
 % \subsection{Bookshelf File Formats}
 
+\subsection{Simple Placement Metrics}
+
 As the new benchmarks did not contain functional information,
 timing models, and so forth, it was entirely practical to
 simplify the file formats so that they were easy to parse.
@@ -290,16 +326,28 @@ GSRC ``bookshelf''\cite{umichbookshelf}, with many groups
 contributing software tools and benchmark problems.
 
 
-\subsection{Secondary Objectives}
 
-An obvious objective for releasing a benchmark for
-some problem $X$ is to be able to find better solutions
-for problem $X$.  A secondary objective -- which should
-not be overlooked -- is that good benchmarks, particularly
-ones that simplify a complex problem, provide a training
-ground for students entering a field.
+% SIGDA newsletter! Franc Brglez from MCNC
+% http://web.cs.ucla.edu/classes/layout/testing/Examples.iscas/ISCAS89/Benchmark.readme
 
-As mentioned earlier, the technological advances that
+% {\bf Talk about production file formats versus things that
+%   are easy to parse.  Decisions made for GSRC Bookshelf.}
+
+% \cite{Caldwell000693}\cite{umichbookshelf}
+
+
+\subsection{Complex Placement Metrics}
+
+
+\subsection{Growing the Research Community}
+
+While the most obvious objective for releasing a benchmark for some
+problem $X$ is to be able to find better solutions for problem $X$,
+there are other objectives as well.  Good benchmarks, particularly
+ones that simplify a complex problem, provide a training ground for
+students entering a field.
+
+The technological advances that
 have enabled the growth of the semiconductor industry
 are due to the hard work of researchers from around the
 world.  Every seasoned expert was at some point in their
@@ -311,16 +359,35 @@ adequate for a student to understand the constraints, and
 to experiment with new ideas.  The simplified file formats
 allowed for rapid prototyping.
 
-% SIGDA newsletter! Franc Brglez from MCNC
-% http://web.cs.ucla.edu/classes/layout/testing/Examples.iscas/ISCAS89/Benchmark.readme
+There is often a trade-off:
+a simple problem, with a single metric, versus
+a complex ``realistic'' problem, with multiple competing
+objectives.  Spanning tree, Steiner tree, moving to clock
+tree, where we measure skew, source to sink delay, jitter,
+power consumption.  To routing, where multiple trees compete
+for resources.
+Partitioning -- simple problem to measure, impact when used
+in a complex tool is muted.  Single step of a design automation
+flow, version a complete run.
 
-% {\bf Talk about production file formats versus things that
-%   are easy to parse.  Decisions made for GSRC Bookshelf.}
-
-% \cite{Caldwell000693}\cite{umichbookshelf}
+Good benchmarks can be used to direct the focus of researchers
+on critical problems.
 
 
-\subsection{The ISPD Contests}
+\iffalse
+Secondary objectives.  Training ground for new students
+entering the field -- a way to build understanding.  Simplified
+construction of tools, lower time and effort required to
+experiment with new ideas.
+\fi
+
+% \subsection{Secondary Objectives}
+
+
+
+
+
+\section{The ISPD Contests}
 
 With new net lists, circuits, and simplified file formats,
 many pieces were now in place to accerate research
@@ -338,21 +405,17 @@ well as their advisors.
 \begin{table}
   \begin{tabular}{|r|l|}\hline
     Year & Contest \\ \hline
-    2005 & Placement \\ \hline
-    2006 & Placement \\ \hline    
-    2007 & Global Routing \\ \hline
-    2008 & Global Routing \\ \hline
+    2005/2006 & Placement \\ \hline
+    2007/2008 & Global Routing \\ \hline
     2009 & Clock Network Synthesis \\ \hline    
     2010 & High Performance Clock Network Synthesis \\ \hline    
     2011 & Routability-Driven Placement \\ \hline
-    2012 & Discrete Gate Sizing \\ \hline
-    2013 & Discrete Gate Sizing \\ \hline    
+    2012/2013 & Discrete Gate Sizing \\ \hline
     2014 & Detailed Routing-Driven Placement \\ \hline    
     2015 & Blockage-Aware Detailed Routing-Driven Placement \\ \hline
     2016 & Routability-Driven FPGA Placement \\ \hline
     2017 & Clock-Aware FPGA Placement \\ \hline    
-    2018 & Initial Detailed Routing \\ \hline    
-    2019 & Initial Detailed Routing \\ \hline
+    2018/2019 & Initial Detailed Routing \\ \hline    
     2020 & Wafer-Scale Deep Learning Accelerator Placement \\ \hline
     2021 & Wafer-Scale Physics Modeling \\ \hline
   \end{tabular}
@@ -440,7 +503,7 @@ Include this?  Not really placement, but placement-ish?
 \fi
 
 
-\section{Next Steps}
+\section{From Benchmarks to Flows}
 
 In the past few years, there have been increasing
 numbers of open-source circuit designs,
@@ -474,7 +537,7 @@ Complex tool flows for evaluation are trouble.
 \fi
 
 
-\subsection{The OpenROAD}
+% \subsection{The OpenROAD}
 
 On significant effort is the OpenROAD\cite{Ajayi19} project,
 working to create a complete set of tools for RTL-to-GDS.
@@ -485,32 +548,20 @@ working to create a complete set of tools for RTL-to-GDS.
 
 \section{Concluding Comments}
 
-\begin{quote}
-It seems apparent that more benchmarks for layout synthesis are
-needed, they should be more fully described, as discussed earlier in
-the paper. In the opinion of the author, distributing pure
-geometrical data is no longer sufficient for meaningful benchmarking
-of algorithms used in real-life applications to produce working chip
-layouts. The circuit's function as well as its speed and timing
-requirements should be supplied together with technological data
-required to verify the performance of the completed design. As an
-unavoidable consequence, future benchmarks will have to come from
-sources willing to put the information about logical functions of the
-benchmark circuits in the public domain.
-\end{quote}
-
 
 Certainly, much has changed over the years.  Preas\cite{Preas87}
 noted in 1987 that some circuits with over 10,000 cells were becoming
 commonplace -- challenging to handle because representing them
 ``may require a substantial fraction of a megabyte for storage.''
 Circuits of this size might seem absurdly small today -- but they
-were in fact challenging.
+were in fact challenging for the era.
 
 It's easy to forget -- but not so long ago, the world wide web was not
 ubiquitous. Getting access to benchmarks, even if they were ``publicly
 available,'' required knowing who to ask, where to look, and the
-navigation of anonymous FTP servers.  Disk space, processor cycles,
+navigation of anonymous FTP servers -- and often, data was
+exchanged with magnetic tapes sent through the physical mail.
+Disk space, processor cycles,
 and memory, were all in short supply -- even with access to
 benchmarks, it might not be possible to do anything with them.  In
 this era, nearly everyone has a smart phone with a blazingly fast
@@ -518,6 +569,24 @@ processor, nearly infinite disk space, and vast amounts of RAM on
 their workstations.  Many of the engineers working today started their
 careers with punch cards, paper terminals, and, if they were lucky,
 floppy disks.
+
+The research field has matured, and the community has grown
+significantly.  For physical design, the contests held annually
+at ISPD have been of tremendous benefit -- new benchmarks, organized
+and curated by industry leaders, are made available.  These
+new benchmarks track the leading technological edge, and help
+guide the academic community towards the most pressing problems.
+These benchmarks are often simplified, making an ideal platform
+for graduate students to gain understanding and insight, without
+becoming overwhelmed.
+
+With the availability of complex circuit designs and tools, all in
+open-source format, benchmarking of an entire design flow is possible --
+and this is becoming more common.  Keeping some focus on simplified
+problems at individual stages of a flow remains useful; we 
+anticipate a range of benchmarks and metrics to be relevant over
+the years to come.
+
 
 
 
