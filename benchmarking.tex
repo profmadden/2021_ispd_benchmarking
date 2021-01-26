@@ -141,10 +141,20 @@ billion transistors.
 The technological advances required for this progress
 have not been spontaneous.  At each
 step along the way, researchers from both academia and
-industry have been quietly identifying and overcoming
+industry, and from a wide range of fields,
+have been quietly identifying and overcoming
 technological barriers.  The massive electronics industry,
 which has impacted almost every aspect of modern life,
 is the product of decades of hard work.
+
+VLSI physical design focuses on translating the logical function
+of a system into an equivalent physical representation.  Key
+steps are logic synthesis -- translating a higher level system
+specification into simple logic gates -- followed by finding
+physical locations for each gate on a silicon die, and the
+generation of interconnecting wires.  Each step in a physical
+design flow is difficult, and automation is essential for
+even modest sized problems.
 
 Benchmarking, the practice of using example problems to compare
 different solution approaches, has been critical to this progress.
@@ -210,6 +220,18 @@ design automation tools and encouraged common design file formats.
 
 
 
+\subsection{Metrics}
+{\bf Simple Placement Metrics}
+
+As the new benchmarks did not contain functional information,
+timing models, and so forth, it was entirely practical to
+simplify the file formats so that they were easy to parse.
+Much of this work was done as part of the of the
+GSRC ``bookshelf''\cite{umichbookshelf}, with many groups
+contributing software tools and benchmark problems.
+
+{\bf Complex Placement Metrics}
+
 
 
 \subsection{Early Benchmarks}
@@ -271,6 +293,7 @@ results were reported\cite{Madden010030}.
 
 \subsection{From Partitioning to Placement}
 
+
 Researchers in both academia and industry were troubled
 by a lack of up-to-date physical benchmarks; what was
 needed was a way to break the log-jam.
@@ -316,15 +339,6 @@ to work from.
 
 % \subsection{Bookshelf File Formats}
 
-\subsection{Simple Placement Metrics}
-
-As the new benchmarks did not contain functional information,
-timing models, and so forth, it was entirely practical to
-simplify the file formats so that they were easy to parse.
-Much of this work was done as part of the of the
-GSRC ``bookshelf''\cite{umichbookshelf}, with many groups
-contributing software tools and benchmark problems.
-
 
 
 % SIGDA newsletter! Franc Brglez from MCNC
@@ -336,10 +350,11 @@ contributing software tools and benchmark problems.
 % \cite{Caldwell000693}\cite{umichbookshelf}
 
 
-\subsection{Complex Placement Metrics}
 
 
-\subsection{Growing the Research Community}
+\section{The ISPD Contests}
+
+% \subsection{Growing the Research Community}
 
 While the most obvious objective for releasing a benchmark for some
 problem $X$ is to be able to find better solutions for problem $X$,
@@ -387,7 +402,7 @@ experiment with new ideas.
 
 
 
-\section{The ISPD Contests}
+
 
 With new net lists, circuits, and simplified file formats,
 many pieces were now in place to accerate research
