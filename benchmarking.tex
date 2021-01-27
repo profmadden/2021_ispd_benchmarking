@@ -64,35 +64,41 @@
 \author{Ismail S. K. Bustany}
 \email{ISMAILB@xilinx.com}
 \affiliation{
-  \institution{Xilinx}
+  \institution{Xilinx Inc.}
+  \city{Fremont}
+  \state{California}
 }
 \author{Jinwook Jung}
 \email{jinwookjung@ibm.com}
 \affiliation{
   \institution{IBM T.J.\ Watson Research Center}
-  \streetaddress{1101 Kitchawan Rd}
+%  \streetaddress{1101 Kitchawan Rd}
   \city{Yorktown Heights}
   \state{New York}
-  \postcode{10598}
+%  \postcode{10598}
 }
 \author{Patrick H. Madden}
 \email{pmadden@binghamton.edu}
 \affiliation{
   \institution{SUNY Binghamton CSD}
-  \streetaddress{Box 6000}
+%  \streetaddress{Box 6000}
   \city{Binghamton}
   \state{New York}
-  \postcode{13902}
+%  \postcode{13902}
 }
 \author{Natarajan Viswanathan}
 \email{nviswan@cadence.com}
 \affiliation{
-  \institution{Cadence}
+  \institution{Cadence Design Systems, Inc.}
+  \city{Austin}
+  \state{Texas}
 }
 \author{Stephen Yang}
 \email{stepheny@xilinx.com}
 \affiliation{
-  \institution{Xilinx}
+  \institution{Xilinx Inc.}
+  \city{Fremont}
+  \state{California}
 }
 
 
@@ -147,18 +153,20 @@ technological barriers.  The massive electronics industry,
 which has impacted almost every aspect of modern life,
 is the product of decades of hard work.
 
+\iffalse
 VLSI physical design focuses on translating the logical function
-of a system into an equivalent physical representation.  Key
-steps are logic synthesis -- translating a higher level system
-specification into simple logic gates -- followed by finding
-physical locations for each gate on a silicon die, and the
-generation of interconnecting wires.  Each step in a physical
-design flow is difficult, and automation is essential for
-even modest sized problems.
+of a system into an equivalent physical representation.  
+Logic synthesis involves translation of higher level system
+specifications into simple logic elements.  This is followed by
+placement, the location of logic elements onto a two-dimensional
+plane, and then routing, which connects logic elements together
+with wiring.  This portion of the circuit design process is
+normally referred to as ``physical design.''
+\fi
 
 Benchmarking, the practice of using example problems to compare
 different solution approaches, has been critical to this progress.
-Benchmarks that have well defined metrics, and that are widely
+Benchmarks with well defined metrics, and that are widely
 available, are most helpful; they can engage a broad audience, drawing
 in contributions and ideas.  The market forces that have driven the
 electronics industry forward have also in some ways been a barrier;
@@ -167,16 +175,15 @@ around process technologies, circuit designs, and design methodologies
 give a competitive advantage, and groups at the leading edge of
 technology are often reluctant to reveal their secrets.
 
-In this paper, we look back on how the role of benchmarking
-in physical design, with an emphasis on circuit placement.
-Following something of a rocky start, the physical design
-community has found workable solutions that protects the
-intellectual property of industry leaders, while also
-opening up design benchmarks for the general public.
-This has allowed
-physical design to evolve to a state where sustained,
-regular progress can be made.
-
+In this paper, we look back on benchmarking in physical design, with
+an emphasis on circuit placement.  Following something of a rocky
+start, the physical design community has found workable solutions that
+protect the intellectual property of industry leaders, while also
+opening up design benchmarks for the general public.  This has allowed
+physical design to evolve to a state where sustained, regular progress
+can be made.  The annual ISPD contests have been a catalyst for
+research, and have also served as an excellent way strengthen and grow
+the research community.
 
 % https://en.wikipedia.org/wiki/Transistor_count
 % Better citation for stuff like this?
@@ -212,15 +219,44 @@ others.
 
 The very earliest circuits were designed by hand, each one a custom
 creation. As design sizes increased, and semiconductor fabrication
-technologies became more refined, designers converged on a few
-common conventions and abstractions, such as lambda-based design rules
-and standard cell libraries\cite{Mead93}.  A design flow of logic
-synthesis, to placement, and to routing, enabled interchangable
-design automation tools and encouraged common design file formats.
+technologies became more refined, automation became essential and
+designers converged on a few common conventions and
+abstractions. Lambda-based design rules and standard cell
+libraries\cite{Mead93} allowed the physical design of circuits to be
+handled by software.  A design flow of logic synthesis, to placement,
+and to routing, enabled interchangable design automation tools and
+encouraged common design file formats.
+
+In circuit placement, there are a number of different metrics
+used to evaluate solutions.  The simplest is a {\em half perimeter
+  wire length estimate}; for a standard cell design, the
+cells are placed into horizontal rows, with the bounding boxes
+of the pins for each net being used as an estimate of routing
+distances.  With the simple metric, determining which placement
+is ``best'' can be done by simply comparing total lengths.
+
+Circuit routing demands can complicate matters considerably, however.
+If the wiring demand in an area of the chip is high, this can
+result in routing detours -- which increase wire lengths -- or
+even result in routing failure.  To address this, placement
+metrics often include a {\em density} constraint -- limiting the
+number of cells in any area of the design, or the total number of
+pins.
+
+The metrics can be improved further, taking into account the
+wiring produced by a complete run of a global and detail router.
+With information about cell functionality, circuit timing, power
+consumption, and other metrics can be evaluated.
+
+There is something of a balancing act with placement metrics.
+A simple metric such as wire length can give a clear indication
+of ``winners'' and ``losers'' -- but this may miss key performance
+concerns.  If multiple metrics are in place, which approach
+can be considered ``best'' is much less clear.
 
 
-
-\subsection{Metrics}
+\iffalse
+% \subsection{Metrics}
 {\bf Simple Placement Metrics}
 
 As the new benchmarks did not contain functional information,
@@ -231,7 +267,7 @@ GSRC ``bookshelf''\cite{umichbookshelf}, with many groups
 contributing software tools and benchmark problems.
 
 {\bf Complex Placement Metrics}
-
+\fi
 
 
 \subsection{Early Benchmarks}
@@ -246,9 +282,13 @@ and quickly gained prominence.  The benchmarks are shown in Table
 complexity to the leading edge of industrial design, they filled a
 vacuum, and were a catalyst for academic research.  The availability
 of circuits that could be used as physical design benchmarks sparked a
-wave of circuit placement research.
+wave of circuit placement research; there was heavy competition
+between simulated annealing\cite{Kirkpatrick830671}, numerical methods\cite{Kleinhans910356}, and recursive
+bisection\cite{Dunlop850092}.
 
 \begin{table}
+  \caption{The original MCNC standard cell
+    benchmarks\cite{Kozminski91}.}\label{tab:mcnc}
   \begin{tabular}{|l|r|r|r|} \hline
 Name & \# cells & \# nets & \# I/O \\ \hline
     fract   &   125 &   147 & 24 \\ \hline
@@ -260,13 +300,11 @@ Name & \# cells & \# nets & \# I/O \\ \hline
   industry2 & 12142 & 13419 & 495 \\ \hline
   industry3 & 15059 & 21940 & 375 \\ \hline
   \end{tabular}
-  \caption{The original MCNC standard cell
-    benchmarks\cite{Kozminski91}.}\label{tab:mcnc}
 \end{table}
 
 
 There was hope that more benchmarks would
-become available; Kozminski\cite{Kozminski91} noted the following:
+become available, with Kozminski\cite{Kozminski91} noting the following:
 
 \begin{quote}
 It seems apparent that more benchmarks for layout synthesis are
@@ -282,24 +320,38 @@ sources willing to put the information about logical functions of the
 benchmark circuits in the public domain.
 \end{quote}
 
-A decade later, the original MCNC
+A decade later, however, the original MCNC
 benchmarks were still in wide use, and
 the gap between academic research and
 industrial practice had widened.
-Even more troubling -- to try to keep pace, many research
-groups were scaling and translating the benchmarks in
-a variety of ways, resulting in massive variations in how
-results were reported\cite{Madden010030}.
+The lack of new benchmarks resulted in many groups
+adapting the MCNC benchmarks in one way or another.  Cell sizes
+were adjusted and mapped to new libraries, to keep
+track of changing process technologies.  Routing models
+shifted from a channel-based approach to over-the-cell,
+as additional routing layers became available.  The
+files originally released were translated from one
+format to another, to take advantage of new design
+automation tools, and to provide compatibility with
+new software.
+
+All of these changes undermined one of the original objectives of the
+benchmarks -- comparison of different placement strategies.  Rather
+that having a clear indication of which techniques were effective, and
+highlighting key problems to solve, the research literature was
+cluttered with results that were unintentionally
+ambiguous\cite{Madden010030}.
 
 \subsection{From Partitioning to Placement}
 
 
-Researchers in both academia and industry were troubled
-by a lack of up-to-date physical benchmarks; what was
-needed was a way to break the log-jam.
-This break
-arrived in the form of the release of ``ISPD98'' partitioning
-benchmarks by Alpert\cite{Alpert980080}.
+Researchers in both academia and industry were troubled by a lack of
+up-to-date physical benchmarks.  It was broadly understood that good
+benchmarks were necessary for academic research -- but intellectual
+property constraints limited what any leading-edge company could
+release.  A benchmarking break-through for circuit placement arrived
+in the form of the release of the ``ISPD98'' partitioning benchmarks by
+Alpert\cite{Alpert980080}.
 
 Alpert noted the following:
 \begin{quote}
@@ -307,23 +359,26 @@ All information relating to circuit functionality, timing and
 technology is removed. Unfortunately, this limits the direct
 applicability of these circuits (e.g., functional replication for
 partitioning); yet, the release of these circuits would have been
-impossible otherwise. \cite{Alpert980080}
+impossible otherwise.% \cite{Alpert980080}
 \end{quote}
 
-Without functional information, reverse-engineering of the circuits
-was impossible -- thus protecting intellectual property.
+Intellectual property concerns were addressed by stripping
+away functionality, and by removing some portions of the circuit.
 With the net list structure, however, it was possible to construct
 a placement benchmark that could be used for an objective such
 as wire length minimization -- Wang\cite{Wang000260} did this
 for standard cells, with Adya\cite{Adya020012} taking the idea
-further to address mixed-size placement.  
+further to create placement benchmarks that mixed
+standard cells and macro blocks.
 
 % industry practice\cite{Adya040472}.
 
 After a number of years of little change, there was a burst of
-activity.  The
-GSRC supported GTX project \cite{Caldwell000693} provided a platform
-to work from.
+activity.  The GSRC supported GTX project\cite{Caldwell000693}
+provided an excellent platform to work from, with many researchers
+from academia and industry becoming involved.  The GSRC
+``bookshelf\cite{bookshelf}'' became stocked with a variety
+of design benchmarks and design automation tools.
 
 % ISPD98 partitioning benchmarks by Chuck
 
@@ -355,6 +410,8 @@ to work from.
 \section{The ISPD Contests}
 
 % \subsection{Growing the Research Community}
+\iffalse
+
 
 While the most obvious objective for releasing a benchmark for some
 problem $X$ is to be able to find better solutions for problem $X$,
@@ -387,7 +444,7 @@ flow, version a complete run.
 
 Good benchmarks can be used to direct the focus of researchers
 on critical problems.
-
+\fi
 
 \iffalse
 Secondary objectives.  Training ground for new students
@@ -399,25 +456,49 @@ experiment with new ideas.
 % \subsection{Secondary Objectives}
 
 
+With new ``anonymized'' net lists and simplified file formats,
+many pieces were now in place to accelerate research
+in physical design.  The physical design community, and
+in particular those active within ISPD, collaborated to
+create new benchmarks, and to have a forum for their dissemination.
+This evolved into the ISPD contest series, with the first
+contest focusing on circuit placement.
+
+Typically, an ISPD contest involves the following.
+\begin{itemize}
+\item An industry-affiliated research group defines a contest
+  problem, and associated metrics.  This is often aligned with
+  a research challenge faced internally.
+\item A handful of sample problems are provided - contestants
+  use these for initial experiments and design tool development.
+\item Prior to ISPD, the contestants provide executable versions
+  of their tools to the industrial research group. The industrial
+  group then
+  performs experiments using both the public benchmarks, and
+  also a set of benchmarks kept secret.
+\item At ISPD, the results of the contest are announced, and all
+  benchmarks are made publicly available.
+\end{itemize}
+
+This practice has been of tremendous benefit.  First, researchers with
+access to leading-edge technology can reveal their most pressing
+challenges, and make it possible for the broader community to
+contribute -- while also protecting proprietary information.  The
+problems faced are simplified so that new students can gain an
+understanding of the field, and try new ideas and approaches in a
+low-risk manner.  Comparisons, performed by the industrial group, are
+balanced -- there is no tuning or cherry picking of results.  The
+competition also helps build the research community; students from
+different groups around the world have a shared experience, develop
+friendships, and find potential research collaborators.
 
 
-
-
-
-With new net lists, circuits, and simplified file formats,
-many pieces were now in place to accerate research
-in physical design.  
-
-In 2005, ISPD began to hold annual contests to evaluate different
-approaches to key physical design problems.  For circuit placement,
-the contests have occurred in 2005, 2006, 2011, 2014, 2015, with 2016
-and 2017 focusing on placement for field programmable gate arrays.
-
-The contests draw entries from many research groups, and have
-helped to form a community amongst students in the field, as
-well as their advisors.  
+The ISPD contests are shown in Table \ref{tab:ispdcontest}.
+In the remainder of this section, we will discuss placement-related
+contests in more detail.
 
 \begin{table}
+  \caption{The ISPD Contests.}
   \begin{tabular}{|r|l|}\hline
     Year & Contest \\ \hline
     2005/2006 & Placement \\ \hline
@@ -434,20 +515,54 @@ well as their advisors.
     2020 & Wafer-Scale Deep Learning Accelerator Placement \\ \hline
     2021 & Wafer-Scale Physics Modeling \\ \hline
   \end{tabular}
-  \caption{The ISPD Contests.}
   \label{tab:ispdcontest}
 \end{table}
 
 \subsection{Mixed Size Placement, 2005, 2006}
 
-{\bf Gi-Joon}.  
-\cite{ISPD05_contest}
-Details here about ISPD 2005.  Cite relevant papers.
-Benchmarks are adaptec, bigblue versions.  Legal2.pl script to
-check legality.  Nine teams competing.
-Fixed macros, from 200k to 2.1 million cells.
+The ISPD contests began with a focus on placement,
+using net lists with a mixture of standard cells
+and macro blocks\cite{ISPD05_contest}.  As most
+placement tools were unable to handle movable
+macro blocks, these were fixed in place for the
+contest.
 
-2006 adds target density, newblue designs.  Ten teams.  
+A new set of benchmarks -- derived from industrial
+designs, but with fewer modifications than found
+with the ISPD '98 partitioning benchmarks -- were released.
+These benchmarks were several orders of magnitude
+larger than the MCNC set, testing the scalability
+of different algorithmic approaches.  The largest
+benchmark, bigblue4, contained more than 2.1 million
+movable objects, and more than eight thousand fixed
+macros.  The benchmarks
+also had a great deal of internal white space; the
+chips had fixed outlines, and not all silicon area
+was utilized.
+
+The contest organizers also provided scripts to
+check legality of solutions, ensuring that comparisons
+would be unbiased.  For 2005, the only metric
+considered was half-perimeter wire length; in 2006,
+the contest was extended to consider routing congestion.
+Nine teams competed in 2005; the next year, the number
+of teams increased to ten.
+
+\begin{table}
+  \caption{ISPD 2005 Placement Benchmarks}
+  \begin{tabular}{|c||r|r|r|r|}\hline
+    Circuit & \# Objects & \# Movable & \# Fixed & Nets \\ \hline
+adaptec1 & 211447 & 210904 & 543 & 221142  \\
+adaptec2 & 255023 & 254457 & 566 & 266009  \\
+adaptec3 & 451650 & 450927 & 723 & 466758  \\
+adaptec4 & 496045 & 494716 & 1329 & 515951  \\
+bigblue1 & 278164 & 277604 & 560 & 284479  \\
+bigblue2 & 557866 & 534782 & 23084 & 577235  \\
+bigblue3 & 1096812 & 1095519 & 1293 & 1123170  \\
+bigblue4 & 2177353 & 2169183 & 8170 & 2229886  \\ \hline
+\end{tabular}
+\end{table}
+
 
 \subsection{Routability, 2011}
 
@@ -456,10 +571,34 @@ Details, cite some papers.
 
 \subsection{Detail Routing Driven Placement, 2014, 2015}
 
+Continuing the evolution of placement benchmarking,
+the contests in 2014 and 2015 examined the interactions
+of detailed routing with placement closely\cite{Yutsis14,Bustany15}.
+
+Design rules for deep submicron circuitry are quite complex;
+spacing, alignment, and a variety of other factors make
+fabricating the wiring at the cell level difficult.  The new
+benchmarks tracked minimum spacing rules, end-of-line rules,
+pin blockage, and more.
+
+Because of the complexity, contest problems shifted from the
+simplified GSRC Bookshelf formats to industry-standard LEF
+and DEF; more challenging for the development of an academic
+tool, but necessary to capture the constraints of leading edge
+design.
+
+Despite the difficulty of the problem, many teams competed,
+with UWPlacer taking first in the contest in 2014\cite{Darav15}, and second in
+2015\cite{Darav16}, while a team from NTU took first in 2015\cite{Huang15}.
+
+\iffalse
+% \cite{Darav14, Darav15, Huang15}
+
+\cite{Yutsis14}
 Details, cite some papers.
 Detail Routing.
 {\bf Ismail?}
-
+\fi
 
 
 \subsection{FPGA Placement 2016, 2017}
@@ -468,14 +607,14 @@ FPGA placement became the topic of ISPD Contest for 2016 and 2017. As
 FPGA hardware technology advances and FPGA design sizes increase, the
 core EDA algorithms including place and route face greater
 challenges. Traditional academic FPGA placement study was primarily
-based on benchmarks in VPN era. From modern FPGA design point of view,
-these benchmarks are relatively small and the underlying FPGA
-architecture is over simplified. A new set of benchmarks mapped to
-latest commercial FPGAs can draw attention from academic research
-groups.
+based on benchmarks in VPR\cite{Betz97} era. From modern FPGA design
+point of view, these benchmarks are relatively small and the
+underlying FPGA architecture is over simplified. A new set of
+benchmarks mapped to latest commercial FPGAs can draw attention from
+academic research groups.
 
 In ISPD 2016 Xilinx held Routability-Driven FPGA Placement Contest
-\cite{sy1}[1]. This is the first FPGA placement congest aiming on routability,
+\cite{sy1}. This is the first FPGA placement congest aiming on routability,
 with benchmarks mapped on state-of-the-art commercial FPGA
 architecture based on 20nm technology. The contest attracted 19
 academic teams, 12 of them submitted final placer into
@@ -485,29 +624,29 @@ placement quality is measured by Vivado router in Xilinx tool flow. If
 the placement passes legality check and it is routed successfully,
 total routed wirelength is used as the key metric. The total runtime
 of place/route also matters. It serves as a scaling factor impacting
-the metric by +/-10 percent.  UTPlacer\cite{sy2} [2] (from University of Texas
-Austin), RippleFPGA\cite{sy3} [3] (from Chinese University of Hong Kong) and
-GPlace\cite{sy4} [4] (from University of Guelph) won the first, second and third
+the metric by +/-10 percent.  UTPlacer\cite{sy2}  (from University of Texas
+Austin), RippleFPGA\cite{sy3}  (from Chinese University of Hong Kong) and
+GPlace\cite{sy4}  (from University of Guelph) won the first, second and third
 place, respectively.
 
-ISPD 2017 contest, Clock Aware FPGA Placement Contest\cite{sy5} [5], is an
+ISPD 2017 contest, Clock Aware FPGA Placement Contest\cite{sy5} , is an
 extension from 2016’s topic. Clocking network in FPGA device poses a
 major constraint to placement problem, because FPGA architecture
 designers need to find a balance between reducing clock network area
 and giving place/route flexibility. The problem becomes very
 challenging for modern FPGA designs with many clocks. 9 teams
 submitted their placers to compete. The final winners are UTPlaceF 2.0
-\cite{sy6}[6] (from University of Texas Austin), NTUfplace\cite{sy7} [7] (from National
-Taiwan University) and RippleFPGA\cite{sy8} [8] (from Chinese University of Hong
+\cite{sy6} (from University of Texas Austin), NTUfplace\cite{sy7} (from National
+Taiwan University) and RippleFPGA\cite{sy8}  (from Chinese University of Hong
 Kong).
 
 Two ISPD FPGA placement contests triggered a lot of academic research
 in the subsequent years. Benchmarks released in the contests, together
 with the industrial tool supported evaluation flow, set up a perfect
 platform for researchers to try out various placement
-algorithms. There are successes on better placement quality\cite{sy9} [9],
-faster runtime, algorithm parallelization\cite{sy10,sy11} [10,11], machine-learning
-enhancement\cite{sy12} [12].
+algorithms. There are successes on better placement quality\cite{sy9} ,
+faster runtime, algorithm parallelization\cite{sy10,sy11} , machine-learning
+enhancement\cite{sy12}.
 
 
 
@@ -563,28 +702,36 @@ working to create a complete set of tools for RTL-to-GDS.
 
 \section{Concluding Comments}
 
+Certainly, much has changed over the years.  Preas\cite{Preas87} noted
+in 1987 that some circuits with over 10,000 cells were becoming
+commonplace -- challenging to handle because representing them ``may
+require a substantial fraction of a megabyte for storage.''
+Gaining access to benchmarks, even if they
+were ``publicly available,'' required knowing who to ask, where to
+look, and the navigation of anonymous FTP servers. Often, data
+was exchanged with magnetic tapes sent through the physical mail.
+Disk space, processor cycles, and memory, were all in short supply.
 
-Certainly, much has changed over the years.  Preas\cite{Preas87}
-noted in 1987 that some circuits with over 10,000 cells were becoming
-commonplace -- challenging to handle because representing them
-``may require a substantial fraction of a megabyte for storage.''
-Circuits of this size might seem absurdly small today -- but they
-were in fact challenging for the era.
+In this era, there are pocket-sized processors with
+vast amounts of RAM, high speed wireless communications, and nearly
+infinite storage and compute resources in the cloud.  The 2021
+edition of the International Symposium on Physical Design will
+be conducted virtually, with talks and events streaming to
+attendees around the world.  This is possible {\em because} of
+the decades of effort in the design automation community,
+and the collaborations of countless researchers in academia and
+industry.
 
-It's easy to forget -- but not so long ago, the world wide web was not
-ubiquitous. Getting access to benchmarks, even if they were ``publicly
-available,'' required knowing who to ask, where to look, and the
-navigation of anonymous FTP servers -- and often, data was
-exchanged with magnetic tapes sent through the physical mail.
-Disk space, processor cycles,
-and memory, were all in short supply -- even with access to
-benchmarks, it might not be possible to do anything with them.  In
-this era, nearly everyone has a smart phone with a blazingly fast
-processor, nearly infinite disk space, and vast amounts of RAM on
-their workstations.  Many of the engineers working today started their
-careers with punch cards, paper terminals, and, if they were lucky,
-floppy disks.
+Looking back, the changes are staggering.  It is safe to assume
+that progress will continue, and the world of twenty, thirty,
+forty years from now is hard to imagine.  Certainly, there
+will be a need for new benchmarks, new metrics, new problem
+definitions; we would hope that the ISPD contests would
+continue to be a venue for framing the problems to solve,
+and an entry point for future generations of design automation
+researchers.
 
+\iffalse
 The research field has matured, and the community has grown
 significantly.  For physical design, the contests held annually
 at ISPD have been of tremendous benefit -- new benchmarks, organized
@@ -601,8 +748,7 @@ and this is becoming more common.  Keeping some focus on simplified
 problems at individual stages of a flow remains useful; we 
 anticipate a range of benchmarks and metrics to be relevant over
 the years to come.
-
-
+\fi
 
 
 \balance
