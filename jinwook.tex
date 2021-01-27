@@ -3,7 +3,7 @@
 The CAD contests have been important venues for stimulating research on modern design automation challenges.
 However, most of the past contests only tackle the point tool problems confined to a single design stage, e.g., global placement contest in the ISPD-2006 placement contest~\cite{nam:2006is} and the ICCAD-2019 global routing contest~\cite{dolgov:2019ca}.
 In order to foster research on cross-stage optimization and flow-scale design methodology, the IEEE CEDA Design Automation Technical Committee (DATC)~\cite{ieee-datc} has over the past five years developed a public reference design flow, named \textit{DATC Robust Design Flow (RDF)}, based upon the winning tools and research outcomes from the CAD contests.
-As highlighted in a series of the RDF papers beginning at ICCAD-2016 \cite{jung:2016od,jung:2017dr,jung:2018dr,jung:2018drod,chen:2019da,chen:2020da}, the mission of DATC RDF is towards (i) establishing a complete, acdemic RTL-to-GDS flow built upon the outcomes of past CAD contests and leading research codes; (ii) consolidating design benchmarks and leading point tool libraries; and (iii) connecting academic research to industrial practice and designs by supporting industry-standard design exchange formats.  
+As highlighted in a series of the RDF papers beginning at ICCAD-2016 \cite{jung:2016od,jung:2017dr,jung:2018dr,jung:2018drod,chen:2019da,chen:2020da}, the mission of DATC RDF is towards (i) establishing a complete, academic RTL-to-GDS flow built upon the outcomes of past CAD contests and leading research codes; (ii) consolidating design benchmarks and leading point tool libraries; and (iii) connecting academic research to industrial practice and designs by supporting industry-standard design exchange formats.  
 
 \Cref{tab:rdf-overview} outlines the components included in the latest DATC RDF flow~\cite{chen:2020da} with the tools from the winning entries and research outcomes of past CAD contests highlighted in boldface.
 DATC RDF provides multiple paths from Verilog to routed DEF; it includes paths that are composed of the point tools from the past CAD contests for the important physical design stages. 
@@ -40,3 +40,9 @@ In the past year, the scope and mission of DATC RDF have further been extended t
 Specifically, the latest RDF-2020 release includes \textit{calibration datasets} for two important electrical analyses: parasitic estimation and static timing analysis (STA)~\cite{rdf-calibration-repo}.
 Academic research on RC extraction and STA is often {\em uncalibrated} due to the lack of standard calibration against which improvements can steadily be evaluated. 
 We envision that the calibration datasets of DATC RDF help boost the research advancement along the axes of accuracy and capacity for fundamental analyses that guide IC physical design.
+
+Many of the tools used in the RDF flow
+are also part of the OpenROAD\cite{Ajayi19} project -- much of the
+success of these efforts have come from active collaboration
+of academia, industry, and professional society groups.
+

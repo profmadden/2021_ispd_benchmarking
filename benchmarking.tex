@@ -57,15 +57,15 @@
 \begin{document}
 
 
-\title{Still Benchmarking After All These Years\\(Draft, Invited)}
+\title{Invited: Still Benchmarking After All These Years}
 \iffalse
 \author{Blind Review}
 \else
-\author{Ismail S. K. Bustany}
-\email{ISMAILB@xilinx.com}
+\author{Ismail S. Bustany}
+\email{ismailb@xilinx.com}
 \affiliation{
   \institution{Xilinx Inc.}
-  \city{Fremont}
+  \city{San Jose}
   \state{California}
 }
 \author{Jinwook Jung}
@@ -97,7 +97,7 @@
 \email{stepheny@xilinx.com}
 \affiliation{
   \institution{Xilinx Inc.}
-  \city{Fremont}
+  \city{San Jose}
   \state{California}
 }
 
@@ -235,13 +235,13 @@ of the pins for each net being used as an estimate of routing
 distances.  With the simple metric, determining which placement
 is ``best'' can be done by simply comparing total lengths.
 
-Circuit routing demands can complicate matters considerably, however.
+Complete circuit routing, rather than
+wire length estimation, can complicate matters considerably, however.
 If the wiring demand in an area of the chip is high, this can
 result in routing detours -- which increase wire lengths -- or
 even result in routing failure.  To address this, placement
 metrics often include a {\em density} constraint -- limiting the
-number of cells in any area of the design, or the total number of
-pins.
+number of cells or pins in any area of the design.
 
 The metrics can be improved further, taking into account the
 wiring produced by a complete run of a global and detail router.
@@ -320,7 +320,7 @@ sources willing to put the information about logical functions of the
 benchmark circuits in the public domain.
 \end{quote}
 
-A decade later, however, the original MCNC
+A decade later in 2001, however, the original MCNC
 benchmarks were still in wide use, and
 the gap between academic research and
 industrial practice had widened.
@@ -566,8 +566,29 @@ bigblue4 & 2177353 & 2169183 & 8170 & 2229886  \\ \hline
 
 \subsection{Routability, 2011}
 
+\iffalse
 \input natarajan.tex
 Details, cite some papers.
+\fi
+
+Moving beyond the simple placement density metrics,
+the 2011 contest used a global router to evaluate
+solution quality.  A simplified global routing
+model was used, with multiple layers and a regular
+grid structure.
+
+A number of new benchmarks were also introduced, the
+``superblue'' series, as well as a hybrid cost function
+that measured placement tool run time along with
+global routing grid overflow.
+
+Nine teams entered placement tools -- and there was
+a ``contest within a contest,'' with five teams
+entering a global routing competition.  Many of the
+contest entries have matured, and are part of the
+open-source design automation tool flow discussed in
+a following section.
+
 
 \subsection{Detail Routing Driven Placement, 2014, 2015}
 
@@ -587,9 +608,12 @@ and DEF; more challenging for the development of an academic
 tool, but necessary to capture the constraints of leading edge
 design.
 
-Despite the difficulty of the problem, many teams competed,
-with UWPlacer taking first in the contest in 2014\cite{Darav15}, and second in
-2015\cite{Darav16}, while a team from NTU took first in 2015\cite{Huang15}.
+Despite the difficulty of the problem, many teams competed, with a
+collaborative effort between the University of Calgary and the
+University of Waterloo taking first in the contest in
+2014\cite{Darav15}; this team placed second in 2015\cite{Darav16}.
+The winner from 2015 was an effort from National
+Taiwan University\cite{Huang15}.
 
 \iffalse
 % \cite{Darav14, Darav15, Huang15}
@@ -603,24 +627,24 @@ Detail Routing.
 
 \subsection{FPGA Placement 2016, 2017}
 
-FPGA placement became the topic of ISPD Contest for 2016 and 2017. As
+FPGA placement became the topic of the ISPD Contests for 2016 and 2017. As
 FPGA hardware technology advances and FPGA design sizes increase, the
 core EDA algorithms including place and route face greater
 challenges. Traditional academic FPGA placement study was primarily
-based on benchmarks in VPR\cite{Betz97} era. From modern FPGA design
+based on benchmarks from the VPR\cite{Betz97} era. From modern FPGA design
 point of view, these benchmarks are relatively small and the
-underlying FPGA architecture is over simplified. A new set of
-benchmarks mapped to latest commercial FPGAs can draw attention from
+underlying FPGA architecture is overly simplified. A new set of
+benchmarks mapped to latest commercial FPGAs drew attention from
 academic research groups.
 
-In ISPD 2016 Xilinx held Routability-Driven FPGA Placement Contest
-\cite{sy1}. This is the first FPGA placement congest aiming on routability,
+The ISPD 2016 Xilinx held Routability-Driven FPGA Placement Contest
+\cite{sy1} was the first FPGA placement congest aiming on routability,
 with benchmarks mapped on state-of-the-art commercial FPGA
 architecture based on 20nm technology. The contest attracted 19
-academic teams, 12 of them submitted final placer into
+academic teams, while 12 of them submitted final placer into
 benchmarking. Contesters' placers were tested on a set of 12
 testcases, with largest size at 1.1 million movable instances. The
-placement quality is measured by Vivado router in Xilinx tool flow. If
+placement quality was measured by Vivado router in Xilinx tool flow. If
 the placement passes legality check and it is routed successfully,
 total routed wirelength is used as the key metric. The total runtime
 of place/route also matters. It serves as a scaling factor impacting
@@ -629,9 +653,9 @@ Austin), RippleFPGA\cite{sy3}  (from Chinese University of Hong Kong) and
 GPlace\cite{sy4}  (from University of Guelph) won the first, second and third
 place, respectively.
 
-ISPD 2017 contest, Clock Aware FPGA Placement Contest\cite{sy5} , is an
-extension from 2016’s topic. Clocking network in FPGA device poses a
-major constraint to placement problem, because FPGA architecture
+The ISPD 2017 Clock Aware FPGA Placement Contest\cite{sy5} was an
+extension from 2016's topic. Clocking networks in FPGA devices pose a
+major constraint to the placement problem, because FPGA architecture
 designers need to find a balance between reducing clock network area
 and giving place/route flexibility. The problem becomes very
 challenging for modern FPGA designs with many clocks. 9 teams
@@ -640,7 +664,7 @@ submitted their placers to compete. The final winners are UTPlaceF 2.0
 Taiwan University) and RippleFPGA\cite{sy8}  (from Chinese University of Hong
 Kong).
 
-Two ISPD FPGA placement contests triggered a lot of academic research
+The two ISPD FPGA placement contests triggered a lot of academic research
 in the subsequent years. Benchmarks released in the contests, together
 with the industrial tool supported evaluation flow, set up a perfect
 platform for researchers to try out various placement
@@ -659,14 +683,6 @@ Include this?  Not really placement, but placement-ish?
 
 \section{From Benchmarks to Flows}
 
-In the past few years, there have been increasing
-numbers of open-source circuit designs,
-providing a source 
-for new benchmarks, and a way to evaluate entire
-RTL-to-GDS flows.  Robust software frameworks for
-parsing industrial file formats are available,
-and there are open-source tools for most steps
-in a flow.
 
 \iffalse
 
@@ -693,8 +709,7 @@ Complex tool flows for evaluation are trouble.
 
 % \subsection{The OpenROAD}
 
-On significant effort is the OpenROAD\cite{Ajayi19} project,
-working to create a complete set of tools for RTL-to-GDS.
+
 
 % Section on RDF
 \input jinwook.tex
@@ -713,20 +728,26 @@ was exchanged with magnetic tapes sent through the physical mail.
 Disk space, processor cycles, and memory, were all in short supply.
 
 In this era, there are pocket-sized processors with
-vast amounts of RAM, high speed wireless communications, and nearly
-infinite storage and compute resources in the cloud.  The 2021
-edition of the International Symposium on Physical Design will
-be conducted virtually, with talks and events streaming to
-attendees around the world.  This is possible {\em because} of
-the decades of effort in the design automation community,
-and the collaborations of countless researchers in academia and
-industry.
+vast amounts of RAM, high speed wireless communications, and almost
+limitless storage and compute resources in the cloud.
+Design benchmarks, and even complete tool flows in open-source
+format, can be downloaded directly from the web.
+Many of the logistical barriers that hampered research have been
+eliminated, and the contests have provided a framework in which
+industrial groups at the leading edge of technology can provide
+benchmarks and metrics to the broader research community.
+
+The 2021 edition of the International Symposium on Physical Design
+will be conducted virtually, with talks and events streaming to
+attendees around the world.  This is possible {\em because} of the
+decades of effort in the design automation community, and the
+collaborations of countless researchers in academia and industry.
 
 Looking back, the changes are staggering.  It is safe to assume
 that progress will continue, and the world of twenty, thirty,
 forty years from now is hard to imagine.  Certainly, there
 will be a need for new benchmarks, new metrics, new problem
-definitions; we would hope that the ISPD contests would
+definitions; we would hope that ISPD and the ISPD contests would
 continue to be a venue for framing the problems to solve,
 and an entry point for future generations of design automation
 researchers.

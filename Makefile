@@ -6,7 +6,8 @@ paper:
 	pdflatex benchmarking
 
 zip:
-	zip benchmarking.zip benchmarking.tex acmart* Makefile
+	zip benchmarking.zip benchmarking.tex acmart* Makefile jinwook.tex *.bib *.bbl
+
 
 
 
